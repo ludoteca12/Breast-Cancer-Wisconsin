@@ -4,21 +4,3 @@ seaborn
 matplotlib
 scikit-learn
 joblib
-
-verify corr
-
-compactness_se
-fractal_dimension_worst
-symmetry_worst
-concavity_worst
-smoothness_worst
-texture_worst
-fractal_dimension_se
-concavity_se
-smoothness_se
-texture_se
-fractal_dimension_mean
-symmetry_mean
-concavity_mean
-smoothness_mean
-texture_mean
