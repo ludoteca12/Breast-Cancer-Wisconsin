@@ -134,8 +134,8 @@ def scale_features(X_train, X_test):
 
     # Convert back to DataFrames
     X_train_scaled = pd.DataFrame(X_train_scaled, index=X_train.index, columns=X_train.columns)
-    X_test_scaled  = pd.DataFrame(X_test_scaled,  index=X_test.index,  columns=X_train.columns)
-
+    X_test_scaled  = pd.DataFrame(X_test_scaled,  index=X_test.index,  columns=X_test.columns)
+    
     return X_train_scaled, X_test_scaled, scaler
 
 
@@ -173,7 +173,7 @@ def aggregate_features(df: pd.DataFrame) -> pd.DataFrame:
 # =============================================================
 # 8. Save Processed Data
 # =============================================================
-def save_processed_data(X_train, X_test, y_train, y_test, folder="../data/processed/"):
+def save_processed_data(X_train, X_test, y_train, y_test, folder="../../data/processed/"):
     """
     Saves the processed datasets to the processed folder.
 
