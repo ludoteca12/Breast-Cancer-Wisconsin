@@ -6,6 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from src.config import RANDOM_STATE, TEST_SIZE  # importa seu random_state global
 
 
+
 # =============================================================
 # 1. Load Raw Data
 # =============================================================
@@ -173,7 +174,7 @@ def aggregate_features(df: pd.DataFrame) -> pd.DataFrame:
 # =============================================================
 # 8. Save Processed Data
 # =============================================================
-def save_processed_data(X_train, X_test, y_train, y_test, folder="../../data/processed/"):
+def save_processed_data(X_train, X_test, y_train, y_test, folder="../data/processed/"):
     """
     Saves the processed datasets to the processed folder.
 
