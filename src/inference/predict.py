@@ -58,39 +58,38 @@ class PredictionPipeline:
     # -----------------------------------------------------------
     # 3. PREDICT A SINGLE SAMPLE (dict → DataFrame → prediction)
     # -----------------------------------------------------------
-    def predict_single(self, sample: dict) -> dict:
+    def predict_single(self, sample: dict) -> pd.DataFrame:
         """
         Predict a single new sample represented as a Python dictionary.
+        Returns a DataFrame combining input features + prediction output.
         """
-        df = pd.DataFrame([sample])
-        df_prepared = self._validate_and_prepare(df)
-
-        # This assums your data is already scale, if not use bundle["scaler"] in data
-        # DO NOT scale again.
+        df_input = pd.DataFrame([sample])
+        df_prepared = self._validate_and_prepare(df_input)
+    
         pred = self.model.predict(df_prepared)[0]
         prob = self.model.predict_proba(df_prepared)[0, 1]
+    
+        # Build output dataframe
+        df_output = df_input.copy()
+        df_output["prediction"] = int(pred)
+        df_output["prediction_label"] = "Malignant" if pred == 1 else "Benign"
+        df_output["probability_malignant"] = float(prob)
 
-        return {
-            "input": sample,
-            "prediction": int(pred),
-            "prediction_label": "Malignant" if pred == 1 else "Benign",
-            "probability_malignant": float(prob)
-        }
+        return df_output
 
     # -----------------------------------------------------------
     # 4. PREDICT A BATCH OF SAMPLES
     # -----------------------------------------------------------
     def predict_batch(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Predict a batch of samples from a DataFrame.
-        """
         df_prepared = self._validate_and_prepare(df)
-
+    
         preds = self.model.predict(df_prepared)
         probs = self.model.predict_proba(df_prepared)[:, 1]
+    
+        df_output = df.copy()
+        df_output["prediction"] = preds
+        df_output["prediction_label"] = np.where(preds == 1, "Malignant", "Benign")
+        df_output["probability_malignant"] = probs
+    
+        return df_output
 
-        return pd.DataFrame({
-            "prediction": preds,
-            "prediction_label": np.where(preds == 1, "Malignant", "Benign"),
-            "probability_malignant": probs
-        })
