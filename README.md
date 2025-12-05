@@ -29,6 +29,12 @@ Special attention is given to:
 
 ---
 
+## 🔑 **Keywords**
+
+Machine Learning, Classification, Breast Cancer, SHAP, Explainability, Data Science, Medical AI, Gradient Boosting, Model Evaluation, Healthcare Analytics, Python, scikit-learn, EDA, Pipeline, Feature Engineering, Kaggle Dataset
+
+---
+
 ## 📊 2. Dataset
 
 - **Source:** Kaggle — Breast Cancer Wisconsin (Diagnostic)  
@@ -89,26 +95,20 @@ project_root/
 
 ---
 
-## 🚀 5. Installation
+## 📉 **5. Model Comparison Overview**
 
-### **1. Clone the repository**
-```bash
-git clone https://github.com/<your-username>/breast-cancer-classification.git
-cd breast-cancer-classification
-```
+Below is a summary of the main models tested in the project.
 
-### **2. Create environment (optional but recommended)**  
-If you use Anaconda:
+|                     |   Accuracy |   Precision |   Recall |       F1 |   ROC_AUC |
+|:--------------------|-----------:|------------:|---------:|---------:|----------:|
+| Logistic Regression |   0.947368 |    0.909091 | 0.952381 | 0.930233 |  0.992063 |
+| Random Forest       |   0.938596 |    0.972973 | 0.857143 | 0.911392 |  0.992063 |
+| **Gradient Boosting**   |   **0.973684** |    **1**        | **0.928571** | **0.962963** |  **0.992394** |
+| SVC (RBF Kernel)    |   0.95614  |    0.974359 | 0.904762 | 0.938272 |  0.985119 |
+| KNN                 |   0.964912 |    0.975    | 0.928571 | 0.95122  |  0.972884 |
 
-```bash
-conda create -n cancer python=3.10
-conda activate cancer
-```
 
-### **3. Install dependencies**
-```bash
-pip install -r requirements.txt
-```
+> ✔ **Gradient Boosting Classifier** showed the strongest overall performance and most stable SHAP interpretability.
 
 ---
 
@@ -116,19 +116,38 @@ pip install -r requirements.txt
 
 The preprocessing pipeline applies:
 
-- Label encoding (`diagnosis` → 0/1)
-- Standard scaling (train-set-only)
-- Feature engineering (e.g., `radius_avg`, `area_avg`, etc.)
-- Variance-related noise reduction
-- Train/test split
-- Saving:
-  - `X_train_preprocessed.csv`
-  - `X_test_preprocessed.csv`
-  - `y_train.csv`
-  - `y_test.csv`
-  - `scaler.pkl`
+- Label encoding  
+- Standard scaling  
+- Feature engineering  
+- Variance-based filtering  
+- Train/test split  
+- Persisting processed artifacts  
 
 Outliers were **not removed**, as they represent clinically meaningful malignant cases.
+
+---
+
+## 🧪 **7. Visualizations (NEW SECTION — add your images here)**
+
+### 🔥 **Correlation Heatmap**
+![Correlation Heatmap](imgs/correlation_heatmap.png)
+
+---
+
+### 🌡 **Feature Importance — Gradient Boosting**
+![Feature Importance](imgs/feature_importance.png)
+
+---
+
+### 🧪 **Confusion Matrix**
+![Confusion Matrix](imgs/confusion_matrix.png)
+
+---
+
+### 📈 **ROC Curve**
+![ROC Curve](imgs/roc_curve.png)
+
+---
 
 ---
 
