@@ -1,52 +1,51 @@
-
 # 🧬 Breast Cancer Classification — End-to-End Machine Learning Pipeline
 
 A full end-to-end machine learning project using the **Breast Cancer Wisconsin (Diagnostic) Dataset**, implementing:
 
 - Automated preprocessing  
 - Feature engineering  
-- Feature selection  
-- Model training  
+- Feature selection (multi-method consensus)  
+- Model benchmarking  
 - Hyperparameter tuning  
 - Explainability with SHAP  
 - Error analysis  
 - Production-ready inference pipeline (`predict.py`)  
 
-This project follows a modular, industry-grade structure suitable for real deployment and serves as a strong portfolio example for Data Science / ML Engineering positions.
+This project follows an industry-grade structure suitable for real deployment and serves as a strong portfolio example for **Data Science / ML Engineering** roles.
 
 ---
 
-## 🔑 **Keywords**
-
-Machine Learning, Classification, Breast Cancer, SHAP, Explainability, Data Science, Medical AI, Gradient Boosting, Model Evaluation, Healthcare Analytics, Python, scikit-learn, EDA, Pipeline, Feature Engineering, Kaggle Dataset
+## 🔑 Keywords  
+Machine Learning, Classification, Breast Cancer, SHAP, Explainability, Medical AI, Gradient Boosting, Model Evaluation, Predictive Modeling, Python, scikit-learn, Healthcare Analytics, Pipeline, Feature Engineering
 
 ---
 
 ## 📌 1. Project Objective
 
-The goal of this project is to build a robust and explainable machine learning model capable of classifying tumors as **benign** or **malignant** based on computed radiological measurements of cell nuclei.
+Develop a robust and clinically interpretable machine learning model capable of classifying tumors as **benign** or **malignant** based on radiological measurements of cell nuclei.
 
-Special attention is given to:
+Special focus areas:
 
-- Interpretability (SHAP)
-- Clinical reliability (False Negatives)
-- Production-ready inference
-- Proper ML project structure
+- Clinical interpretability  
+- Minimizing false negatives  
+- SHAP-based explainability  
+- Reliable production-ready inference  
+- Clean, modular ML engineering practices  
 
 ---
 
-## 📊 2. Dataset
+## 📊 2. Dataset Overview
 
-- **Source:** Kaggle — Breast Cancer Wisconsin (Diagnostic)  
-  https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data
+**Source:**  
+https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data
 
 - **Rows:** 569  
-- **Features:** 30 numeric predictors  
+- **Features:** 30 numerical predictors  
 - **Target:**  
   - `M` → Malignant  
   - `B` → Benign  
 
-No missing values are present. Several features exhibit strong multicollinearity and tumor-related outliers, which were investigated but **not removed** because they represent clinically meaningful cases (mostly malignant).
+The dataset contains **no missing values**. Outliers were analyzed but **not removed**, as malignant cases naturally exhibit extreme tumor morphology.
 
 ---
 
@@ -56,27 +55,25 @@ No missing values are present. Several features exhibit strong multicollinearity
 project_root/
 │
 ├── data/
-│   ├── raw/               # Original dataset
-│   └── processed/         # Preprocessed + split + engineered features
+│ ├── raw/
+│ └── processed/
 │
 ├── notebooks/
-│   ├── 01_EDA.ipynb
-│   ├── 02_Preprocessing.ipynb
-│   ├── 03_Modeling.ipynb
-│   ├── 04_Feature_Selection.ipynb
-│   ├── 05_Hyperparameter_Tuning.ipynb
-│   ├── 06_Model_Evaluation.ipynb
-│   └── 07_Testing_Inference.ipynb
+│ ├── 01_EDA.ipynb
+│ ├── 02_Preprocessing.ipynb
+│ ├── 03_Modeling.ipynb
+│ ├── 04_Feature_Selection.ipynb
+│ ├── 05_Hyperparameter_Tuning.ipynb
+│ ├── 06_Model_Evaluation.ipynb
+│ └── 07_Testing_Inference.ipynb
 │
 ├── src/
-│   ├── config.py
-│   ├── data/
-│   │   └── preprocessing.py
-│   ├── models/
-│   │   └── final_model.pkl
-│   └── inference/
-│       └── predict.py     # Inference pipeline (production-ready)
+│ ├── config.py
+│ ├── data/preprocessing.py
+│ ├── models/final_model.pkl
+│ └── inference/predict.py
 │
+├── imgs/ # Figures displayed in this README
 └── requirements.txt
 ```
 
@@ -84,30 +81,44 @@ project_root/
 
 ## ⚙️ 4. Technologies Used
 
-- Python 3.10+
-- scikit-learn
-- pandas / numpy
-- seaborn / matplotlib
-- plotly
-- SHAP
-- joblib
-- JupyterLab
+- Python 3.10+  
+- scikit-learn  
+- pandas, numpy  
+- seaborn, matplotlib, plotly  
+- SHAP  
+- joblib  
+- JupyterLab  
 
 ---
 
-## 🧠 5. How Features Were Selected (Consensus Approach)
+## 🧼 5. Preprocessing Overview
 
-Instead of relying on a single method, the final feature set was chosen using a **multi-criteria consensus strategy**, combining:
+The preprocessing pipeline includes:
+
+- Label encoding (`M`/`B` → 1/0)  
+- Standard scaling (fitted only on training data)  
+- Feature engineering (`*_avg` smoothed features)  
+- Variance filtering  
+- Train/test splitting  
+- Persisting datasets and scalers  
+
+Outliers were preserved due to their clinical relevance in malignant tumors.
+
+---
+
+## 🧠 6. Feature Selection (Consensus Approach)
+
+A multi-method feature selection strategy was used to reduce noise and increase classifier robustness by combining:
 
 - ANOVA F-test  
 - Mutual Information  
 - SelectKBest  
 - Random Forest importance  
 - Gradient Boosting importance  
-- SHAP global values  
+- SHAP global impact  
 - Clinical interpretability  
 
-A feature was selected only if it showed **consistent importance across multiple methods** AND carried **meaningful signal based on tumor biology**.
+A feature was selected only if it consistently appeared as relevant across **multiple methods** and matched tumor morphology patterns.
 
 ### 📊 Feature Selection Consensus Table
 
@@ -131,216 +142,92 @@ A feature was selected only if it showed **consistent importance across multiple
 
 ---
 
-## 📉 6. EDA — Correlation & Feature Insights
+## 📉 7. EDA — Correlation & Feature Insights
 
-### 🔍 Interactive Correlation Heatmap  
-*Plotly 5.0*  
+### 🔍 Interactive Correlation Heatmap (Plotly)
+
 👉 [Click here to view the interactive heatmap](imgs/heatmap_75%.html)
 
----
-
-## 📉 **7. Model Comparison Overview**
-
-Below is a summary of the main models tested in the project.
-
-|                     |   Accuracy |   Precision |   Recall |       F1 |   ROC_AUC |
-|:--------------------|-----------:|------------:|---------:|---------:|----------:|
-| Logistic Regression |   0.947368 |    0.909091 | 0.952381 | 0.930233 |  0.992063 |
-| Random Forest       |   0.938596 |    0.972973 | 0.857143 | 0.911392 |  0.992063 |
-| **Gradient Boosting**   |   **0.973684** |    **1**        | **0.928571** | **0.962963** |  **0.992394** |
-| SVC (RBF Kernel)    |   0.95614  |    0.974359 | 0.904762 | 0.938272 |  0.985119 |
-| KNN                 |   0.964912 |    0.975    | 0.928571 | 0.95122  |  0.972884 |
-
-
-> ✔ **Gradient Boosting Classifier** showed the strongest overall performance and most stable SHAP interpretability.
+This visualization helped identify multicollinearity and informed the consensus-based feature selection strategy.
 
 ---
 
-## 📈 8. Model Evaluation
+## 🤖 8. Model Benchmarking
 
-### 🔢 Confusion Matrix
+The following classifiers were trained and evaluated:
 
-The model achieved **zero false positives**, and extremely low false negatives — critical for clinical applications.
+- Logistic Regression  
+- SVM (RBF Kernel)  
+- Random Forest  
+- KNN  
+- **Gradient Boosting (final model)**  
+
+### 📊 Benchmark Results
+
+| Model               | Accuracy | Precision | Recall | F1   | ROC_AUC |
+|--------------------|---------:|----------:|-------:|------:|--------:|
+| Logistic Regression | 0.947 | 0.909 | 0.952 | 0.930 | 0.992 |
+| Random Forest       | 0.938 | 0.973 | 0.857 | 0.911 | 0.992 |
+| **Gradient Boosting** | **0.973** | **1.000** | **0.928** | **0.962** | **0.992** |
+| SVC (RBF)           | 0.956 | 0.974 | 0.904 | 0.938 | 0.985 |
+| KNN                 | 0.964 | 0.975 | 0.928 | 0.951 | 0.972 |
+
+> ✔ **Gradient Boosting** was selected for its superior recall stability and SHAP interpretability.
+
+---
+
+## 📈 9. Model Evaluation
+
+### 🔢 Confusion Matrix  
+The model achieved **zero false positives** and extremely low false negatives — critical for clinical settings.
 
 ![Confusion Matrix](imgs/confusion_matrix.png)
 
 ---
 
-### 📈 ROC Curve
-
-An excellent **AUC = 0.992** indicates strong class separability.
+### 📈 ROC Curve  
+An exceptional **AUC = 0.992** demonstrates high class separability.
 
 ![ROC Curve](imgs/roc_curve.png)
 
 ---
 
-## 🧠 9. Global Explainability (SHAP)
+## 🧠 10. Explainability (SHAP)
 
-SHAP values were used to assess feature contributions to predictions.
+SHAP was used to validate feature importance and ensure clinical interpretability.
 
 ### 🧬 SHAP Summary Plot  
-Shows global distribution of feature impact.
 
 ![SHAP Summary Plot](imgs/shap_summary.png)
 
 Key insights:
 
-- `concave_points_mean` and `concavity_worst` dominate prediction influence  
-- Tumor size features (`radius_mean`, `area_mean`) strongly drive malignancy scores  
-- Symmetry features help differentiate borderline cases  
+- `concave_points_mean` and `concavity_worst` dominate malignancy prediction  
+- Size-related features (`radius`, `area`, `perimeter`) significantly increase malignant probability  
+- Symmetry-based features are useful for classifying borderline tumors  
 
 ---
 
-## 🔍 10. Error Analysis
+## 🔍 11. Error Analysis
 
-- **False negatives** correspond mostly to borderline malignant tumors  
-- **False positives** occur in high-variance benign tissue  
-- Error patterns match expected clinical distributions  
-
----
-
-
-## 🧼 11. Preprocessing Overview
-
-The preprocessing pipeline applies:
-
-- Label encoding  
-- Standard scaling  
-- Feature engineering  
-- Variance-based filtering  
-- Train/test split  
-- Persisting processed artifacts  
-
-Outliers were **not removed**, as they represent clinically meaningful malignant cases.
+- **False negatives** mostly occur on borderline malignant cases  
+- **False positives** appear in high-variance benign samples  
+- Error distribution aligns with clinical expectations
 
 ---
 
-## 🔥 12. Model Training & Hyperparameter Tuning
+## 🧪 12. Inference Pipeline (Production-Ready)
 
-Several classifiers were tested:
+Located in: `src/inference/predict.py`.
 
-- Logistic Regression  
-- SVM  
-- Random Forest  
-- KNN  
-- Gradient Boosting (final model)
-
-The final model was selected using:
-
-- Stratified train/test split  
-- GridSearchCV  
-- Evaluation via:
-  - Accuracy  
-  - Precision  
-  - Recall  
-  - F1-score  
-  - ROC AUC  
-
-### **Final Model:**  
-✔ **GradientBoostingClassifier** (best generalization + best SHAP stability)
-
----
-
-## 📈 13. Model Evaluation (Step 6 Overview)
-
-### **Main metrics (final test set):**
-- **Accuracy:** 97.36%  
-- **Precision:** 100%  
-- **Recall:** 92.85%  
-- **F1-score:** 96.29%  
-- **ROC-AUC:** 99.23%  
-
-
-### Visual outputs:
-- Confusion Matrix  
-- ROC Curve  
-- Precision–Recall Curve  
-- Classification Report (formatted as DataFrame)
-
----
-
-## 🧩 14. Explainability (SHAP)
-
-The model was fully explained using SHAP:
-
-- **Beeswarm Plot** — global feature importance  
-- **Bar Plot** — average absolute SHAP contribution  
-- **Dependence Plots** — feature interaction patterns  
-- **Waterfall Plot** — local explanation of individual predictions  
-
-This ensures interpretability and clinical trust.
-
----
-
-# 🧪 15. Inference — How to Use the Prediction Pipeline
-
-The inference pipeline (`predict.py`) loads:
-
-- the trained model  
-- the saved scaler  
-- the selected features  
-
-### **Single sample prediction**
+### Single Sample Prediction
 
 ```python
 from src.inference.predict import PredictionPipeline
 
 pipeline = PredictionPipeline()
-
-sample = {
+pipeline.predict_single({
     "radius_mean": 14.1,
     "texture_mean": 20.3,
     ...
-}
-
-pipeline.predict_single(sample)
-```
-
-Output (DataFrame):
-
-| feature1 | feature2 | … | prediction | prediction_label | probability_malignant |
-|----------|----------|----|------------|-------------------|------------------------|
-| …        | …        | …  | 1          | Malignant         | 0.982                 |
-
----
-
-### **Batch prediction**
-
-```python
-df = pd.read_csv("new_samples.csv")
-pipeline.predict_batch(df)
-```
-
----
-
-## 📦 16. Running the Full Pipeline
-
-All steps are contained in the `notebooks/` directory, following a clean modular structure:
-
-- **01 → EDA**  
-- **02 → Preprocessing**  
-- **03 → Modeling**  
-- **04 → Feature Selection**  
-- **05 → Hyperparameter Tuning**  
-- **06 → Model Evaluation**  
-- **07 → Testing Inference**  
-
----
-
-## 🛠️ 17. Future Work
-
-- API deployment with FastAPI  
-- Dockerization  
-- Cross-validation with nested CV  
-- SMOTE / class balancing experiments  
-- Model monitoring and drift detection  
-- MLflow experiment tracking  
-
----
-
-## 🧑‍🔬 Author
-
-**Mateus Vieira Vasconcelos**  
-Data Science & Machine Learning Enthusiast  
-
----
+})
