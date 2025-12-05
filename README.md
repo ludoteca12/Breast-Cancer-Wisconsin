@@ -231,3 +231,45 @@ pipeline.predict_single({
     "texture_mean": 20.3,
     ...
 })
+```
+
+### Batch Prediction
+
+```python
+
+df = pd.read_csv("new_samples.csv")
+pipeline.predict_batch(df)
+
+```
+
+---
+
+## 📦 13. Running the Full Pipeline
+
+All development steps are available in the notebooks/ folder:
+
+1. EDA
+2. Preprocessing
+3. Modeling
+4. Feature Selection
+5. Hyperparameter Tuning
+6. Model Evaluation
+7. Inference Testing
+
+---
+
+## 🛠️ 14. Future Work
+
+FastAPI deployment
+Dockerization
+Nested cross-validation
+SMOTE experiments
+MLflow tracking
+Drift monitoring
+
+---
+
+## 👤 Author
+
+Mateus Vieira Vasconcelos
+Data Science & Machine Learning Enthusiast
