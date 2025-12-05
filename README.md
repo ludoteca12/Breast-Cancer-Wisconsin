@@ -134,7 +134,7 @@ A feature was selected only if it showed **consistent importance across multiple
 ## 📉 6. EDA — Correlation & Feature Insights
 
 ### 🔍 Interactive Correlation Heatmap  
-*(Plotly version)*  
+*Plotly 5.0*  
 👉 [Click here to view the interactive heatmap](imgs/heatmap_75%.html)
 
 ---
