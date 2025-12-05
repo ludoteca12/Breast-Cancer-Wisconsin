@@ -95,7 +95,51 @@ project_root/
 
 ---
 
-## 📉 **5. Model Comparison Overview**
+## 🧠 5. How Features Were Selected (Consensus Approach)
+
+Instead of relying on a single method, the final feature set was chosen using a **multi-criteria consensus strategy**, combining:
+
+- ANOVA F-test  
+- Mutual Information  
+- SelectKBest  
+- Random Forest importance  
+- Gradient Boosting importance  
+- SHAP global values  
+- Clinical interpretability  
+
+A feature was selected only if it showed **consistent importance across multiple methods** AND carried **meaningful signal based on tumor biology**.
+
+### 📊 Feature Selection Consensus Table
+
+| Feature                 | ANOVA | RF Importance | GB Importance | SHAP | Final Choice |
+|-------------------------|:-----:|:-------------:|:-------------:|:----:|:------------:|
+| concave_points_mean     | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✔ |
+| concavity_worst         | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✔ |
+| symmetry_worst          | ⭐⭐   | ⭐⭐   | ⭐⭐⭐  | ⭐⭐   | ✔ |
+| radius_avg              | ⭐⭐⭐  | ⭐⭐⭐  | ⭐⭐⭐  | ⭐⭐⭐  | ✔ |
+| perimeter_avg           | ⭐⭐⭐  | ⭐⭐⭐  | ⭐⭐⭐  | ⭐⭐⭐  | ✔ |
+| area_avg                | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐  | ✔ |
+| radius_mean             | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✔ |
+| texture_mean            | ⭐⭐   | ⭐⭐   | ⭐⭐   | ⭐⭐   | ✔ |
+| perimeter_mean          | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✔ |
+| area_mean               | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✔ |
+| smoothness_mean         | ⭐⭐   | ⭐⭐   | ⭐⭐   | ⭐⭐   | ✔ |
+| compactness_mean        | ⭐⭐   | ⭐⭐   | ⭐⭐   | ⭐    | ✔ |
+| concavity_mean          | ⭐⭐⭐  | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ✔ |
+| symmetry_mean           | ⭐⭐   | ⭐⭐   | ⭐⭐   | ⭐⭐   | ✔ |
+| fractal_dimension_mean  | ⭐    | ⭐⭐   | ⭐⭐   | ⭐    | ✔ |
+
+---
+
+## 📉 6. EDA — Correlation & Feature Insights
+
+### 🔍 Interactive Correlation Heatmap  
+*(Plotly version)*  
+👉 [Click here to view the interactive heatmap](imgs/heatmap_75%.html)
+
+---
+
+## 📉 **7. Model Comparison Overview**
 
 Below is a summary of the main models tested in the project.
 
@@ -112,7 +156,51 @@ Below is a summary of the main models tested in the project.
 
 ---
 
-## 🧼 6. Preprocessing Overview
+## 📈 8. Model Evaluation
+
+### 🔢 Confusion Matrix
+
+The model achieved **zero false positives**, and extremely low false negatives — critical for clinical applications.
+
+![Confusion Matrix](imgs/confusion_matrix.png)
+
+---
+
+### 📈 ROC Curve
+
+An excellent **AUC = 0.992** indicates strong class separability.
+
+![ROC Curve](imgs/roc_curve.png)
+
+---
+
+## 🧠 9. Global Explainability (SHAP)
+
+SHAP values were used to assess feature contributions to predictions.
+
+### 🧬 SHAP Summary Plot  
+Shows global distribution of feature impact.
+
+![SHAP Summary Plot](imgs/shap_summary.png)
+
+Key insights:
+
+- `concave_points_mean` and `concavity_worst` dominate prediction influence  
+- Tumor size features (`radius_mean`, `area_mean`) strongly drive malignancy scores  
+- Symmetry features help differentiate borderline cases  
+
+---
+
+## 🔍 10. Error Analysis
+
+- **False negatives** correspond mostly to borderline malignant tumors  
+- **False positives** occur in high-variance benign tissue  
+- Error patterns match expected clinical distributions  
+
+---
+
+
+## 🧼 11. Preprocessing Overview
 
 The preprocessing pipeline applies:
 
@@ -127,45 +215,7 @@ Outliers were **not removed**, as they represent clinically meaningful malignant
 
 ---
 
-## 🧪 **7. Visualizations (NEW SECTION — add your images here)**
-
-### 🔥 **Correlation Heatmap**
-![Correlation Heatmap](imgs/correlation_heatmap.png)
-
----
-
-### 🌡 **Feature Importance — Gradient Boosting**
-![Feature Importance](imgs/feature_importance.png)
-
----
-
-### 🧪 **Confusion Matrix**
-![Confusion Matrix](imgs/confusion_matrix.png)
-
----
-
-### 📈 **ROC Curve**
-![ROC Curve](imgs/roc_curve.png)
-
----
-
----
-
-## 🧠 7. Feature Selection Summary
-
-Techniques used:
-
-- Mutual Information  
-- ANOVA (f-score)  
-- Tree-based importance (Random Forest)  
-- Embedded methods (Gradient Boosting)  
-- SHAP feature contributions  
-
-The final set of selected features was chosen based on **multi-criteria agreement**, model performance, and clinical interpretability.
-
----
-
-## 🔥 8. Model Training & Hyperparameter Tuning
+## 🔥 12. Model Training & Hyperparameter Tuning
 
 Several classifiers were tested:
 
@@ -191,7 +241,7 @@ The final model was selected using:
 
 ---
 
-## 📈 9. Model Evaluation (Step 6 Overview)
+## 📈 13. Model Evaluation (Step 6 Overview)
 
 ### **Main metrics (final test set):**
 - **Accuracy:** 97.36%  
@@ -209,7 +259,7 @@ The final model was selected using:
 
 ---
 
-## 🧩 10. Explainability (SHAP)
+## 🧩 14. Explainability (SHAP)
 
 The model was fully explained using SHAP:
 
@@ -222,17 +272,7 @@ This ensures interpretability and clinical trust.
 
 ---
 
-## 🔍 11. Error Analysis
-
-Both **False Positives** and **False Negatives** were examined in detail.
-
-- Most false negatives occur in borderline malignant cases → clinically critical  
-- False positives tend to appear in high-variance benign tumors  
-- This analysis reinforces model trustworthiness and highlights risk boundaries
-
----
-
-# 🧪 12. Inference — How to Use the Prediction Pipeline
+# 🧪 15. Inference — How to Use the Prediction Pipeline
 
 The inference pipeline (`predict.py`) loads:
 
@@ -273,7 +313,7 @@ pipeline.predict_batch(df)
 
 ---
 
-## 📦 13. Running the Full Pipeline
+## 📦 16. Running the Full Pipeline
 
 All steps are contained in the `notebooks/` directory, following a clean modular structure:
 
@@ -287,7 +327,7 @@ All steps are contained in the `notebooks/` directory, following a clean modular
 
 ---
 
-## 🛠️ 14. Future Work
+## 🛠️ 17. Future Work
 
 - API deployment with FastAPI  
 - Dockerization  
