@@ -16,6 +16,12 @@ This project follows a modular, industry-grade structure suitable for real deplo
 
 ---
 
+## 🔑 **Keywords**
+
+Machine Learning, Classification, Breast Cancer, SHAP, Explainability, Data Science, Medical AI, Gradient Boosting, Model Evaluation, Healthcare Analytics, Python, scikit-learn, EDA, Pipeline, Feature Engineering, Kaggle Dataset
+
+---
+
 ## 📌 1. Project Objective
 
 The goal of this project is to build a robust and explainable machine learning model capable of classifying tumors as **benign** or **malignant** based on computed radiological measurements of cell nuclei.
@@ -26,12 +32,6 @@ Special attention is given to:
 - Clinical reliability (False Negatives)
 - Production-ready inference
 - Proper ML project structure
-
----
-
-## 🔑 **Keywords**
-
-Machine Learning, Classification, Breast Cancer, SHAP, Explainability, Data Science, Medical AI, Gradient Boosting, Model Evaluation, Healthcare Analytics, Python, scikit-learn, EDA, Pipeline, Feature Engineering, Kaggle Dataset
 
 ---
 
